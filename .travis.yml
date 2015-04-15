@@ -1,0 +1,13 @@
+language: clojure
+deploy:
+  provider: codedeploy
+  access_key_id: AKIAI2FGA5EKBAYDGJGA
+  secret_access_key:
+    secure: DSBQhFdPIfDkCv/YJ2sp1Nqkwvo4mtG4mFr/7WXVklXUHjAsykwJhuvw3c+63AFVnwmLqtLSTcs9OgOC9wBZL/aGw1P2iYNICPT/mdp1BBRliQqROGt7DEAfAaYD4D6hSCZ1dSOjjLD93NDRG0ZgE9gEL9G5EFBTSelEvW6UzbU=
+  application: levelup
+  deployment_group: levelup
+  on:
+    branch: develop
+notifications:
+  slack:
+    secure: HKCWtbC4NuT4z2Otd/Cxa1YNi0wO5hy5GOfYHKWe5eUaGlJTHXJmLt/6Yl2/Y8ct6+xwVkPsQzgSjF1XgAs6wvd5mxGz6iOKYSUwEZaj7p33bKkL+pXEGBLni5t2w6rxJQUEJIP82c8tFsQJzY8na1whfRGG865OX4Zywb66u18=
