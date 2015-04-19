@@ -3,6 +3,7 @@ deploy:
   provider: heroku
   api_key:
     secure: BmVi6dg6LETwhR3hcBuWPcVV2A0EqRyXCNEvjHhYuMpdAbABPv/ooDnrFf8S5Px1UcntGbACNjJMUK8D3pfMhEZMUvAV/pUdxgoA5GjJUnPibfAC0rJ7/E4c9zoIu5ME7jj81j+2ogKGJpJdDKhF47/tHGDOhD0xw/WrO13UNLs=
+  app: levelup-dev
   on:
     branch: develop
 notifications:
