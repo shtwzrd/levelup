@@ -9,4 +9,8 @@
   :ring {:handler levelup.handler/app}
   :uberjar-name "server.jar"
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]]
-                   :plugins [[lein-ring "0.9.2"]]}})
+                   :plugins [[lein-ring "0.9.2"]]}}
+  :min-lein-version "2.0.0"
+  )
+
+
