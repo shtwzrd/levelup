@@ -1,11 +1,8 @@
 language: clojure
 deploy:
-  provider: codedeploy
-  access_key_id: AKIAI2FGA5EKBAYDGJGA
-  secret_access_key:
-    secure: DSBQhFdPIfDkCv/YJ2sp1Nqkwvo4mtG4mFr/7WXVklXUHjAsykwJhuvw3c+63AFVnwmLqtLSTcs9OgOC9wBZL/aGw1P2iYNICPT/mdp1BBRliQqROGt7DEAfAaYD4D6hSCZ1dSOjjLD93NDRG0ZgE9gEL9G5EFBTSelEvW6UzbU=
-  application: levelup
-  deployment_group: levelup
+  provider: heroku
+  api_key:
+    secure: BmVi6dg6LETwhR3hcBuWPcVV2A0EqRyXCNEvjHhYuMpdAbABPv/ooDnrFf8S5Px1UcntGbACNjJMUK8D3pfMhEZMUvAV/pUdxgoA5GjJUnPibfAC0rJ7/E4c9zoIu5ME7jj81j+2ogKGJpJdDKhF47/tHGDOhD0xw/WrO13UNLs=
   on:
     branch: develop
 notifications:
