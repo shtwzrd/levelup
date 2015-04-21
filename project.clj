@@ -2,8 +2,9 @@
   :description "FIXME: write description"
   :dependencies [[org.clojure/clojure "1.6.0"]
                  [ring/ring-servlet "1.3.2"]
+                 [buddy/buddy-auth "0.5.1"]
                  [prismatic/schema "0.4.0"]
-                 [metosin/compojure-api "0.19.0"]
+                 [metosin/compojure-api "0.19.3"]
                  [metosin/ring-http-response "0.6.1"]
                  [metosin/ring-swagger-ui "2.1.8-M1"]]
   :ring {:handler levelup.handler/app}
