@@ -36,7 +36,6 @@
   (swagger-ui)
   (swagger-docs
    :title "Levelup")
-  (middlewares [(wrap-authentication auth-backend)])
 
   (swaggered "goal"
              :description "Goal api"
@@ -49,6 +48,7 @@
                             :return String
                             :query-params []
                             :summary "echos the request back as json"
+                            :middlewares [(wrap-authentication auth-backend)]
                             (if-not (authenticated? request)
                               (forbidden (str "Unauthorized"))
                               (ok (str request)))
