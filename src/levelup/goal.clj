@@ -1,12 +1,21 @@
 (ns levelup.goal
   (:require [schema.core :as s]
+            [schema-contrib.core :as sc]
             [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [ring.swagger.schema :as rs :refer [describe]]))
 
 (s/defschema Goal {:id Long
+                   (s/optional-key :templateid) Long
+                   (s/optional-key :parentid) Long
                    :title String
-                   :description String
+                   :start sc/Date
+                   (s/optional-key :end) sc/Date
+                   :category (s/enum :health :spirit :knowledge :finance :happiness :social)
+                   :difficulty (s/enum :trivial :simple :average :huge :colossal)
+                   (s/optional-key :description) String
+                   (s/optional-key :reason) String
+                   :recurring? Boolean
                    :completed? Boolean})
 
 (s/defschema NewGoal (dissoc Goal :id))
@@ -36,8 +45,7 @@
 ;; Data
 
 (when (empty? @goals)
-  (add! {:title "all base are belong" :description "for great justice" :completed? true})
-  (add! {:title "sob uncontrollably" :description "faarkrog doesn't love me enough" :completed? false}))
+  (add! {:title "all base are belong" :description "for great justice" :completed? true :recurring? false :difficulty :trivial :category :spirit :start "2015-05-05"}))
 
 ;; Routes
 
