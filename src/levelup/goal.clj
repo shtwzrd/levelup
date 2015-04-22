@@ -8,6 +8,7 @@
                    (s/optional-key :templateid) Long
                    (s/optional-key :parentid) Long
                    :title String
+                   :sequence Long
                    :start org.joda.time.DateTime
                    (s/optional-key :end) org.joda.time.DateTime
                    :category (s/enum :health :spirit :knowledge :finance :happiness :social)
@@ -44,7 +45,7 @@
 ;; Data
 
 (when (empty? @goals)
-  (add! {:title "all base are belong" :description "for great justice" :completed? true :recurring? false :difficulty :trivial :category :spirit :start "2015-05-05"}))
+  (add! {:title "all base are belong" :sequence 0 :description "for great justice" :completed? true :recurring? false :difficulty :trivial :category :spirit :start "2015-05-05"}))
 
 ;; Routes
 
