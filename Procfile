@@ -1,1 +1,1 @@
-web: lein ring server-headless $PORT
+web: java $JVM_OPTS -cp target/server.jar clojure.main -m levelup.core
