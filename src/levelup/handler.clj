@@ -33,23 +33,23 @@
                        :authfn my-authfn}))
 
 (defapi app
-  (swagger-ui)
-  (swagger-docs
-   :title "Levelup")
+  (swagger-docs)
+  (context "/api" []
+           (context "/v1" []
+                    (swagger-ui)
+                    (swaggered "goal"
+                               :description "Goal api"
+                               goal-routes)
 
-  (swaggered "goal"
-             :description "Goal api"
-             goal-routes)
-
-  (swaggered "util"
-             :description "etc"
-             (context "/util" []
-                      (ANY* "/echo" request
-                            :return String
-                            :query-params []
-                            :summary "echos the request back as json"
-                            :middlewares [(wrap-authentication auth-backend)]
-                            (if-not (authenticated? request)
-                              (forbidden (str "Unauthorized"))
-                              (ok (str request)))
-                            ))))
+                    (swaggered "util"
+                               :description "etc"
+                               (context "/util" []
+                                        (ANY* "/echo" request
+                                              :return String
+                                              :query-params []
+                                              :summary "echos the request back as json"
+                                              :middlewares [(wrap-authentication auth-backend)]
+                                              (if-not (authenticated? request)
+                                                (forbidden (str "Unauthorized"))
+                                                (ok (str request)))
+                                              ))))))

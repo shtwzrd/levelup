@@ -49,33 +49,27 @@
 ;; Routes
 
 (defroutes* goal-routes
-  (context "/goals" []
            (context "/goals" []
                     (GET* "/" []
                           :return   [Goal]
                           :summary  "Gets all Goals"
-                          :nickname "getGoals"
                           (ok (get-goals)))
                     (GET* "/:id" []
                           :path-params [id :- Long]
                           :return   Goal
                           :summary  "Gets a goal"
-                          :nickname "getGoal"
                           (ok (get-goal id)))
                     (POST* "/" []
                            :return   Goal
                            :body     [goal (describe NewGoal "new goal")]
                            :summary  "Adds a goal"
-                           :nickname "addGoal"
                            (ok (add! goal)))
                     (PUT* "/" []
                           :return   Goal
                           :body     [goal Goal]
                           :summary  "Updates a goal"
-                          :nickname "updateGoal"
                           (ok (update! goal)))
                     (DELETE* "/:id" []
                              :path-params [id :- Long]
                              :summary  "Deletes a Goal"
-                             :nickname "deleteGoal"
-                             (ok (delete! id))))))
+                             (ok (delete! id)))))
