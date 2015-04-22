@@ -5,7 +5,6 @@
                  [clj-time "0.9.0"]
                  [buddy/buddy-auth "0.5.1"]
                  [prismatic/schema "0.4.0"]
-                 [schema-contrib "0.1.3"]
                  [metosin/compojure-api "0.19.3"]
                  [metosin/ring-http-response "0.6.1"]
                  [metosin/ring-swagger-ui "2.1.8-M1"]]

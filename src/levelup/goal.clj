@@ -1,6 +1,5 @@
 (ns levelup.goal
   (:require [schema.core :as s]
-            [schema-contrib.core :as sc]
             [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [ring.swagger.schema :as rs :refer [describe]]))
@@ -9,8 +8,8 @@
                    (s/optional-key :templateid) Long
                    (s/optional-key :parentid) Long
                    :title String
-                   :start sc/Date
-                   (s/optional-key :end) sc/Date
+                   :start org.joda.time.DateTime
+                   (s/optional-key :end) org.joda.time.DateTime
                    :category (s/enum :health :spirit :knowledge :finance :happiness :social)
                    :difficulty (s/enum :trivial :simple :average :huge :colossal)
                    (s/optional-key :description) String
