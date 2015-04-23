@@ -2,7 +2,7 @@
   (:require [schema.core :as s]
             [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
-            [ring.swagger.schema :as rs :refer [describe]]))
+            [ring.swagger.schema :as rs]))
 
 (s/defschema Goal {:id Long
                    (s/optional-key :templateid) Long
@@ -62,7 +62,7 @@
                           (ok (get-goal id)))
                     (POST* "/" []
                            :return   Goal
-                           :body     [goal (describe NewGoal "new goal")]
+                           :body     [goal (rs/describe NewGoal "new goal")]
                            :summary  "Adds a goal"
                            (ok (add! goal)))
                     (PUT* "/" []
