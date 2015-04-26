@@ -7,6 +7,7 @@
             [buddy.auth.backends.httpbasic :refer [http-basic-backend]]
             [buddy.auth.backends.token :refer [token-backend]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
+            [levelup.user :refer :all]
             [levelup.goal :refer :all]))
 
 ;; DATA - Placeholder secrets
@@ -40,6 +41,9 @@
                     (swaggered "goal"
                                :description "Goal api"
                                goal-routes)
+                    (swaggered "user"
+                               :description "User api"
+                               user-routes)
 
                     (swaggered "util"
                                :description "etc"
