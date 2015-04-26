@@ -4,10 +4,10 @@
                  [ring/ring-servlet "1.3.2"]
                  [clj-time "0.9.0"]
                  [buddy/buddy-auth "0.5.1"]
-                 [prismatic/schema "0.4.0"]
-                 [metosin/compojure-api "0.20.0-SNAPSHOT"]
+                 [prismatic/schema "0.4.1"]
+                 [metosin/compojure-api "0.20.0"]
                  [metosin/ring-http-response "0.6.1"]
-                 [metosin/ring-swagger-ui "2.1.0-M2-2"]]
+                 [metosin/ring-swagger-ui "2.1.1-M2"]]
   :ring {:handler levelup.handler/app}
   :uberjar-name "server.jar"
   :profiles {:dev {:dependencies [[javax.servlet/servlet-api "2.5"]]

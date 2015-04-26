@@ -42,27 +42,28 @@
 ;; Routes
 
 (defroutes* user-routes
-  (context "/users" []
-           (GET* "/" []
-                 :return   [User]
-                 :summary  "Gets all users"
-                 (ok (get-users)))
-           (GET* "/:id" []
-                 :path-params [id :- Long]
-                 :return   User
-                 :summary  "Gets a user"
-                 (ok (get-user id)))
-           (POST* "/" []
+  (context* "/users" []
+            :tags ["users"]
+            (GET* "/" []
+                  :return   [User]
+                  :summary  "Gets all users"
+                  (ok (get-users)))
+            (GET* "/:id" []
+                  :path-params [id :- Long]
                   :return   User
-                  :body     [user (rs/describe NewUser "new user")]
-                  :summary  "Adds a user"
-                  (ok (add! user)))
-           (PUT* "/" []
-                 :return   User
-                 :body     [user User]
-                 :summary  "Updates a user"
-                 (ok (update! user)))
-           (DELETE* "/:id" []
-                    :path-params [id :- Long]
-                    :summary  "Deletes a user"
-                    (ok (delete! id)))))
+                  :summary  "Gets a user"
+                  (ok (get-user id)))
+            (POST* "/" []
+                   :return   User
+                   :body     [user (rs/describe NewUser "new user")]
+                   :summary  "Adds a user"
+                   (ok (add! user)))
+            (PUT* "/" []
+                  :return   User
+                  :body     [user User]
+                  :summary  "Updates a user"
+                  (ok (update! user)))
+            (DELETE* "/:id" []
+                     :path-params [id :- Long]
+                     :summary  "Deletes a user"
+                     (ok (delete! id)))))
