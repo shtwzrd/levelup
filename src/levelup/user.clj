@@ -6,6 +6,7 @@
             [levelup.goal :as goals]))
 
 (s/defschema User {:id Long
+                   (s/optional-key :password) String
                    :email String})
 
 (s/defschema NewUser (dissoc User :id))
@@ -23,19 +24,20 @@
 
 (defn add! [new-user]
   (let [id (swap! id-seq inc)
-        user (rs/coerce! User (assoc new-goal :id id))]
+        user (rs/coerce! User (assoc new-user :id id))]
     (swap! users assoc id user)
     user))
 
 (defn update! [user]
   (let [user (rs/coerce! User user)]
     (swap! users assoc (:id user) user)
-    (get-user (:id goal))))
+    (get-user (:id user))))
 
 ;; Data
 
 (when (empty? @users)
-  (add! {:email "test@tester.com"}))
+  (add! {:email "test@tester.com" :password "secret"})
+  (add! {:email "admin@tester.com" :password "secret"}))
 
 ;; Routes
 
@@ -57,7 +59,7 @@
                   (ok (add! user)))
            (PUT* "/" []
                  :return   User
-                 :body     [goal User]
+                 :body     [user User]
                  :summary  "Updates a user"
                  (ok (update! user)))
            (DELETE* "/:id" []

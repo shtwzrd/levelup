@@ -7,6 +7,7 @@
 (s/defschema Goal {:id Long
                    (s/optional-key :templateid) Long
                    (s/optional-key :parentid) Long
+                   :owner-id Long
                    :title String
                    :sequence Long
                    :start org.joda.time.DateTime
@@ -17,6 +18,7 @@
                    (s/optional-key :description) String
                    (s/optional-key :reason) String
                    :recurring? Boolean
+                   :public? Boolean
                    :completed? Boolean})
 
 (s/defschema NewGoal (dissoc Goal :id))
@@ -46,7 +48,7 @@
 ;; Data
 
 (when (empty? @goals)
-  (add! {:title "all base are belong" :sequence 0 :description "for great justice" :completed? true :recurring? false :difficulty :trivial :category :spirit :start "2015-05-05"}))
+  (add! {:title "all base are belong" :owner-id 1 :sequence 0 :description "for great justice" :completed? true :recurring? false :public? false :difficulty :trivial :category :spirit :start "2015-05-05"}))
 
 ;; Routes
 

@@ -7,53 +7,56 @@
             [buddy.auth.backends.httpbasic :refer [http-basic-backend]]
             [buddy.auth.backends.token :refer [token-backend]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
-            [levelup.user :refer :all]
-            [levelup.goal :refer :all]))
-
-;; DATA - Placeholder secrets
-(def authdata {:admin "secret"
-               :test "secret"})
+            [levelup.user :as user]
+            [levelup.goal :as goal]))
 
 ;; Define function that is responsible of authenticating requests.
 ;; In this case it receives a map with username and password and i
 ;; should return a value that can be considered a "user" instance
 ;; and should be a logical true.
 
-(defn my-authfn
-  [req {:keys [username password]}]
-  (when-let [user-password (get authdata (keyword username))]
-    (when (= password user-password)
-      (keyword username))))
+(defn authenticate
+  [request authdata]
+  (let [username (:username authdata)
+        password (:password authdata)]
+    (let [user-password (:password (user/get-user (read-string username)))]
+         (when (= user-password password)
+           username))))
 
-;; Create an instance of auth backend without explicit handler for
-;; unauthorized request. (That leaves the responsability to default
-;; backend implementation.
+  ;; Create an instance of auth backend without explicit handler for
+  ;; unauthorized request. (That leaves the responsability to default
+  ;; backend implementation.
 
-(def auth-backend
-  (http-basic-backend {:realm "MyExampleSite"
-                       :authfn my-authfn}))
+  (def auth-backend
+    (http-basic-backend {:realm "levelup"
+                         :authfn authenticate}))
 
-(defapi app
-  (swagger-docs)
-  (context "/api" []
-           (context "/v1" []
-                    (swagger-ui)
-                    (swaggered "goal"
-                               :description "Goal api"
-                               goal-routes)
-                    (swaggered "user"
-                               :description "User api"
-                               user-routes)
+  (defapi app
+    (swagger-docs)
+    (context "/api" []
+             (context "/v1" []
+                      (swagger-ui)
+                      (swaggered "goal templates"
+                                 :description "Goal api"
+                                 goal/goal-routes)
+                      (swaggered "users"
+                                 :description "User api"
+                                 user/user-routes)
 
-                    (swaggered "util"
-                               :description "etc"
-                               (context "/util" []
-                                        (ANY* "/echo" request
-                                              :return String
-                                              :query-params []
-                                              :summary "echos the request back as json"
-                                              :middlewares [(wrap-authentication auth-backend)]
-                                              (if-not (authenticated? request)
-                                                (forbidden (str "Unauthorized"))
-                                                (ok (str request)))
-                                              ))))))
+                      (swaggered "util"
+                                 :description "etc"
+                                 (context "/util" []
+                                          (GET* "/echo" request
+                                                :return String
+                                                :query-params []
+                                                :summary "echos the request back as json"
+                                                :middlewares [(wrap-authentication auth-backend)]
+                                                (if-not (authenticated? request)
+                                                  (forbidden (str "Unauthorized" " " request))
+                                                  (ok (str request)))
+                                                )))
+                      (context "/users" []
+                               (context "/:user-id" []
+                                        (swaggered "user-goals"
+                                                   :description "User Goals api"
+                                                   goal/goal-routes))))))
