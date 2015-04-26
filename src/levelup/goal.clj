@@ -11,6 +11,7 @@
                    :sequence Long
                    :start org.joda.time.DateTime
                    (s/optional-key :end) org.joda.time.DateTime
+                   (s/optional-key :completion-date) org.joda.time.DateTime
                    :category (s/enum :health :spirit :knowledge :finance :happiness :social)
                    :difficulty (s/enum :trivial :simple :average :huge :colossal)
                    (s/optional-key :description) String
