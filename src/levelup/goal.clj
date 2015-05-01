@@ -54,27 +54,27 @@
 
 (defroutes* goal-routes
   (context* "/goals" []
-           :tags ["goals"]
-           (GET* "/" []
-                 :return   [Goal]
-                 :summary  "Gets all Goals"
-                 (ok (get-goals)))
-           (GET* "/:id" []
-                 :path-params [id :- Long]
-                 :return   Goal
-                 :summary  "Gets a goal"
-                 (ok (get-goal id)))
-           (POST* "/" []
+            :tags ["goals"]
+            (GET* "/" []
+                  :return   [Goal]
+                  :summary  "Gets all Goals"
+                  (ok (get-goals)))
+            (GET* "/:id" []
+                  :path-params [id :- Long]
                   :return   Goal
-                  :body     [goal (rs/describe NewGoal "new goal")]
-                  :summary  "Adds a goal"
-                  (ok (add! goal)))
-           (PUT* "/" []
-                 :return   Goal
-                 :body     [goal Goal]
-                 :summary  "Updates a goal"
-                 (ok (update! goal)))
-           (DELETE* "/:id" []
-                    :path-params [id :- Long]
-                    :summary  "Deletes a Goal"
-                    (ok (delete! id)))))
+                  :summary  "Gets a goal"
+                  (ok (get-goal id)))
+            (POST* "/" []
+                   :return   Goal
+                   :body     [goal (rs/describe NewGoal "new goal")]
+                   :summary  "Adds a goal"
+                   (ok (add! goal)))
+            (PUT* "/" []
+                  :return   Goal
+                  :body     [goal Goal]
+                  :summary  "Updates a goal"
+                  (ok (update! goal)))
+            (DELETE* "/:id" []
+                     :path-params [id :- Long]
+                     :summary  "Deletes a Goal"
+                     (ok (delete! id)))))
