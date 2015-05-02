@@ -8,14 +8,13 @@
 (defn authenticated-user
   [request]
   (if (authenticated? request)
-    (ar/success "yay")
+    true
     (ar/error "Not authenticated")))
 
 (defn is-that-user
   [request]
   (let [id (:identity request)
         uri (last (split (:uri request) #"/"))]
-    (println request " id " id " uri " uri)
     (if (= id uri)
       true
       (ar/error "Not authorized"))))
@@ -37,7 +36,9 @@
    :headers {}
    :body "Not authorized"})
 
-(def auth-rules {:rules [{:pattern #"/api/v1/users/[0-9]+$"
+(def auth-rules {:rules [{:uri "/api/v1/users/login"
+                          :handler authenticated-user}
+                         {:pattern #"/api/v1/users/[0-9]+$"
                           :handler {:and [authenticated-user is-that-user]}}]
                  :on-error unauthorized-handler})
 

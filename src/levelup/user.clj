@@ -17,6 +17,9 @@
                   :return   [User]
                   :summary  "Gets all users"
                   (ok (get-users)))
+            (GET* "/login" []
+                  :summary "Returns 200 on a successfully authenticated request"
+                  (ok))
             (GET* "/:id" []
                   :path-params [id :- Long]
                   :return   User
