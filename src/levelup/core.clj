@@ -6,8 +6,7 @@
   (:gen-class))
 
 (defn init[]
-  (jdbc/with-db-transaction [connection data-access/db-connection]
-    (data-access/create-goals-table-if-not-exists! connection)))
+  (data-access/create-goals-table-if-not-exists! data-access/db-connection))
 
 (defn parse-port [port]
   (Integer/parseInt (or port (System/getenv "PORT") "3000")))
