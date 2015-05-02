@@ -6,7 +6,7 @@
 
 
 (def db-connection
-  (jdbc/get-connection (env :database-url)))
+  (env :database-url))
 
 (defqueries "levelup/sql/goals.sql")
 (defqueries "levelup/sql/tables.sql")
