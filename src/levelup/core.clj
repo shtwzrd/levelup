@@ -7,7 +7,7 @@
 
 (defn init[]
   (println data-access/db-spec)
-  (jdbc/with-db-transaction [connection data-access/db-spec]
+  (jdbc/with-db-transaction [connection data-access/db-connection]
     (data-access/create-goals-table-if-not-exists! connection)))
 
 (defn parse-port [port]
