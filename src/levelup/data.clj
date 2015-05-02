@@ -1,7 +1,12 @@
 (ns levelup.data
   (:require [environ.core :refer [env]]
-            [yesql.core   :refer [defqueries]]))
+            [clojure.string :refer [split]]
+            [clojure.java.jdbc :as jdbc]
+            [yesql.core :refer [defqueries]]))
 
-(def db-connection {:connection (env :database-url)})
+
+(def db-connection
+  (jdbc/get-connection (env :database-url)))
 
 (defqueries "levelup/sql/goals.sql")
+(defqueries "levelup/sql/tables.sql")
