@@ -48,7 +48,7 @@
 ;; Data
 
 (when (empty? @goals)
-  (add! {:title "all base are belong" :owner-id 1 :sequence 0 :description "for great justice" :completed? true :recurring? false :public? false :difficulty :trivial :category :spirit :start "2015-05-05"}))
+  (add! {:title "troll goal" :owner-id 1 :sequence 0 :description "break Faarkrog's hopes and dreams" :completed? true :recurring? false :public? false :difficulty :trivial :category :spirit :start "2015-05-05" :end "2015-05-08"}))
 
 ;; Routes
 

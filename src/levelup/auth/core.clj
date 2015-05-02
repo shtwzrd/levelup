@@ -4,13 +4,14 @@
             [buddy.auth.backends.token :refer [token-backend]]
             [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
             [buddy.auth.accessrules :as ar]
-            [levelup.data :as data]))
+            [levelup.data :as data]
+            [levelup.user :as user]))
 
 (defn authentication-fn
   [request authdata]
   (let [username (:username authdata)
         password (:password authdata)]
-    (let [user-password (:password (data/get-user (read-string username)))]
+    (let [user-password (:password (user/get-user (read-string username)))]
       (when (= user-password password)
         username))))
 
