@@ -36,7 +36,22 @@
 (defn delete! [id] (swap! goals dissoc id) nil)
 
 (defn add! [new-goal]
-  (let [goal (data-access/insert-goal<! data-access/db-connection (seq new-goal))]
+  (let [goal (data-access/insert-goal<! data-access/db-connection
+                                        (:templateid new-goal)
+                                        (:parentid new-goal)
+                                        (:ownerid new-goal)
+                                        (:title new-goal)
+                                        (:flow new-goal)
+                                        (:startdate new-goal)
+                                        (:enddate new-goal)
+                                        (:completiondate new-goal)
+                                        (:category new-goal)
+                                        (:difficulty new-goal)
+                                        (:description new-goal)
+                                        (:reason new-goal)
+                                        (:isrecurring new-goal)
+                                        (:ispublic new-goal)
+                                        (:iscompleted new-goal))]
     goal))
 
 (defn update! [goal]
