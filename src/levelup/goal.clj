@@ -2,24 +2,25 @@
   (:require [schema.core :as s]
             [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
+            [levelup.data :as data-access]
             [ring.swagger.schema :as rs]))
 
 (s/defschema Goal {:id Long
                    (s/optional-key :templateid) Long
                    (s/optional-key :parentid) Long
-                   :owner-id Long
+                   :ownerid Long
                    :title String
-                   :sequence Long
-                   :start org.joda.time.DateTime
-                   (s/optional-key :end) org.joda.time.DateTime
-                   (s/optional-key :completion-date) org.joda.time.DateTime
+                   :flow Long
+                   :startdate org.joda.time.DateTime
+                   (s/optional-key :enddate) org.joda.time.DateTime
+                   (s/optional-key :completiondate) org.joda.time.DateTime
                    :category (s/enum :health :spirit :knowledge :finance :happiness :social)
                    :difficulty (s/enum :trivial :simple :average :huge :colossal)
                    (s/optional-key :description) String
                    (s/optional-key :reason) String
-                   :recurring? Boolean
-                   :public? Boolean
-                   :completed? Boolean})
+                   :isrecurring Boolean
+                   :ispublic Boolean
+                   :iscompleted Boolean})
 
 (s/defschema NewGoal (dissoc Goal :id))
 
@@ -35,9 +36,7 @@
 (defn delete! [id] (swap! goals dissoc id) nil)
 
 (defn add! [new-goal]
-  (let [id (swap! id-seq inc)
-        goal (rs/coerce! Goal (assoc new-goal :id id))]
-    (swap! goals assoc id goal)
+  (let [goal (data-access/insert-goal<! data-access/db-connection new-goal)]
     goal))
 
 (defn update! [goal]
@@ -48,7 +47,7 @@
 ;; Data
 
 (when (empty? @goals)
-  (add! {:title "troll goal" :owner-id 1 :sequence 0 :description "break Faarkrog's hopes and dreams" :completed? true :recurring? false :public? false :difficulty :trivial :category :spirit :start "2015-05-05" :end "2015-05-08"}))
+  (add! {:title "troll goal" :ownerid 1 :flow 0 :description "break Faarkrog's hopes and dreams" :iscompleted true :isrecurring false :ispublic false :difficulty :trivial :category :spirit :startdate "2015-05-05" :enddate "2015-05-08"}))
 
 ;; Routes
 

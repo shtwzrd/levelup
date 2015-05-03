@@ -2,9 +2,9 @@
 -- create the goals table if it does not exist
 CREATE TABLE IF NOT EXISTS goals (
    id                 SERIAL PRIMARY KEY NOT NULL
-   , templateid       TEXT
-   , parentid         TEXT
-   , ownerid          TEXT               NOT NULL
+   , templateid       INT
+   , parentid         INT
+   , ownerid          INT                NOT NULL
    , title            TEXT               NOT NULL
    , category         TEXT               NOT NULL
    , difficulty       TEXT               NOT NULL
@@ -13,9 +13,9 @@ CREATE TABLE IF NOT EXISTS goals (
    , isrecurring      BOOLEAN            NOT NULL
    , ispublic         BOOLEAN            NOT NULL
    , iscompleted      BOOLEAN            NOT NULL
-   , seq              INT
-   , startdate        TIMESTAMP
-   , enddate          TIMESTAMP
+   , flow             INT                NOT NULL
+   , startdate        TIMESTAMP          NOT NULL
+   , enddate          TIMESTAMP          NOT NULL
    , completiondate   TIMESTAMP
 );
 
