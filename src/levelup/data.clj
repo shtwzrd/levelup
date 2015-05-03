@@ -7,6 +7,9 @@
 (defn update-values [map seq fn]
   (reduce #(update-in % [%2] fn) map seq))
 
+(defn cull-nils [map]
+  (into {} (remove #(nil? (val %)) map)))
+
 (def db-connection
   (env :database-url))
 

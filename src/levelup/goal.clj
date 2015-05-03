@@ -4,7 +4,7 @@
             [ring.util.http-response :refer :all]
             [clj-time.format :as f]
             [clj-time.coerce :as c]
-            [levelup.data :as data-access]
+            [levelup.data :as db]
             [ring.swagger.schema :as rs])
   (:import [java.sql Timestamp]))
 
@@ -32,31 +32,31 @@
 (defonce id-seq (atom 0))
 (defonce goals (atom (array-map)))
 
-; Domain funcs
+;; Domain funcs
 
 (defn get-goal [id] (@goals id))
 (defn get-goals [] (-> goals deref vals reverse))
 (defn delete! [id] (swap! goals dissoc id) nil)
 
 (defn add! [new-goal]
-  (println new-goal)
-  (let [goal (data-access/insert-goal<! data-access/db-connection
-                                        (:templateid new-goal)
-                                        (:parentid new-goal)
-                                        (:ownerid new-goal)
-                                        (:title new-goal)
-                                        (:flow new-goal)
-                                        (c/to-sql-time (:startdate new-goal))
-                                        (c/to-sql-time (:enddate new-goal))
-                                        (c/to-sql-time (:completiondate new-goal))
-                                        (name (:category new-goal))
-                                        (name (:difficulty new-goal))
-                                        (:description new-goal)
-                                        (:reason new-goal)
-                                        (:isrecurring new-goal)
-                                        (:ispublic new-goal)
-                                        (:iscompleted new-goal))
-        result (data-access/update-values goal [:startdate :enddate :completiondate] c/from-sql-time)]
+  (let [goal (db/insert-goal<! db/db-connection
+                               (:templateid new-goal)
+                               (:parentid new-goal)
+                               (:ownerid new-goal)
+                               (:title new-goal)
+                               (:flow new-goal)
+                               (c/to-sql-time (:startdate new-goal))
+                               (c/to-sql-time (:enddate new-goal))
+                               (c/to-sql-time (:completiondate new-goal))
+                               (name (:category new-goal))
+                               (name (:difficulty new-goal))
+                               (:description new-goal)
+                               (:reason new-goal)
+                               (:isrecurring new-goal)
+                               (:ispublic new-goal)
+                               (:iscompleted new-goal))
+        result (db/cull-nils
+                (db/update-values goal [:startdate :enddate :completiondate] c/from-sql-time))]
     result))
 
 (defn update! [goal]
