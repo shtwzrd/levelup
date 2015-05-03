@@ -35,7 +35,12 @@
 ;; Domain funcs
 
 (defn get-goal [id] (@goals id))
-(defn get-goals [] (db/get-all-goal-templates))
+
+(defn get-goals []
+  (map (fun [] (db/cull-nils
+                (db/update-values goal [:startdate :enddate :completiondate] c/from-sql-time)))
+       (db/get-all-goal-templates db/db-connection)))
+
 (defn delete! [id] (swap! goals dissoc id) nil)
 
 (defn add! [new-goal]
