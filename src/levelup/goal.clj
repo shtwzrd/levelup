@@ -31,7 +31,7 @@
 (defonce id-seq (atom 0))
 (defonce goals (atom (array-map)))
 
-e; Domain funcs
+; Domain funcs
 
 (defn get-goal [id] (@goals id))
 (defn get-goals [] (-> goals deref vals reverse))
