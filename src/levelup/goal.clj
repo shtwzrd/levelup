@@ -35,7 +35,7 @@
 ;; Domain funcs
 
 (defn get-goal [id] (@goals id))
-(defn get-goals [] (-> goals deref vals reverse))
+(defn get-goals [] (db/get-all-goal-templates))
 (defn delete! [id] (swap! goals dissoc id) nil)
 
 (defn add! [new-goal]

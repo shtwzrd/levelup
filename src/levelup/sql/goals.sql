@@ -1,4 +1,4 @@
--- name: all-goal-templates
+-- name: get-all-goal-templates
 -- Selects all publically listed top-level goals
 SELECT id
        , templateid
