@@ -5,7 +5,8 @@
             [clj-time.format :as f]
             [clj-time.coerce :as c]
             [levelup.data :as data-access]
-            [ring.swagger.schema :as rs]))
+            [ring.swagger.schema :as rs])
+  (:import [java.sql Timestamp]))
 
 (s/defschema Goal {:id Long
                    (s/optional-key :templateid) Long
@@ -45,9 +46,9 @@
                                         (:ownerid new-goal)
                                         (:title new-goal)
                                         (:flow new-goal)
-                                        (str (c/to-sql-time (f/parse (:startdate new-goal))))
-                                        (str (c/to-sql-time (f/parse (:enddate new-goal))))
-                                        (str (c/to-sql-time (f/parse (:completiondate new-goal))))
+                                        (new Timestamp (c/to-long (f/parse (:startdate new-goal))))
+                                        (new Timestamp (c/to-long (f/parse (:enddate new-goal))))
+                                        (new Timestamp (c/to-long (f/parse (:completiondate new-goal))))
                                         (name (:category new-goal))
                                         (name (:difficulty new-goal))
                                         (:description new-goal)
