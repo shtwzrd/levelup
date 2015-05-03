@@ -38,6 +38,7 @@
 (defn delete! [id] (swap! goals dissoc id) nil)
 
 (defn add! [new-goal]
+  (println new-goal)
   (let [goal (data-access/insert-goal<! data-access/db-connection
                                         (:templateid new-goal)
                                         (:parentid new-goal)
