@@ -31,7 +31,7 @@
 (defonce id-seq (atom 0))
 (defonce goals (atom (array-map)))
 
-;; Domain funcs
+e; Domain funcs
 
 (defn get-goal [id] (@goals id))
 (defn get-goals [] (-> goals deref vals reverse))
@@ -45,9 +45,9 @@
                                         (:ownerid new-goal)
                                         (:title new-goal)
                                         (:flow new-goal)
-                                        (c/to-sql-time (f/parse (:startdate new-goal)))
-                                        (c/to-sql-time (f/parse (:enddate new-goal)))
-                                        (c/to-sql-time (f/parse (:completiondate new-goal)))
+                                        (str (c/to-sql-time (f/parse (:startdate new-goal))))
+                                        (str (c/to-sql-time (f/parse (:enddate new-goal))))
+                                        (str (c/to-sql-time (f/parse (:completiondate new-goal))))
                                         (name (:category new-goal))
                                         (name (:difficulty new-goal))
                                         (:description new-goal)
