@@ -4,6 +4,8 @@
             [clojure.java.jdbc :as jdbc]
             [yesql.core :refer [defqueries]]))
 
+(defn update-values [map seq fn]
+  (reduce #(update-in % [%2] fn) map seq))
 
 (def db-connection
   (env :database-url))

@@ -14,9 +14,9 @@
                    :ownerid Long
                    :title String
                    :flow Long
-                   :startdate java.sql.Timestamp
-                   :enddate java.sql.Timestamp
-                   (s/optional-key :completiondate) java.sql.Timestamp
+                   :startdate org.joda.time.DateTime
+                   :enddate org.joda.time.DateTime
+                   (s/optional-key :completiondate) org.joda.time.DateTime
                    :category (s/enum :health :spirit :knowledge :finance :happiness :social)
                    :difficulty (s/enum :trivial :simple :average :huge :colossal)
                    (s/optional-key :description) String
@@ -46,17 +46,18 @@
                                         (:ownerid new-goal)
                                         (:title new-goal)
                                         (:flow new-goal)
-                                        (:startdate new-goal)
-                                        (:enddate new-goal)
-                                        (:completiondate new-goal)
+                                        (c/to-sql-time (:startdate new-goal))
+                                        (c/to-sql-time (:enddate new-goal))
+                                        (c/to-sql-time (:completiondate new-goal))
                                         (name (:category new-goal))
                                         (name (:difficulty new-goal))
                                         (:description new-goal)
                                         (:reason new-goal)
                                         (:isrecurring new-goal)
                                         (:ispublic new-goal)
-                                        (:iscompleted new-goal))]
-    goal))
+                                        (:iscompleted new-goal))
+        result (data-access/update-values goal [:startdate :enddate :completiondate] c/from-sql-time)]
+    result))
 
 (defn update! [goal]
   (let [goal (rs/coerce! Goal goal)]
