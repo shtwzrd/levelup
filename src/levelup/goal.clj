@@ -3,6 +3,7 @@
             [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [clj-time.format :as f]
+            [clj-time.coerce :as c]
             [levelup.data :as data-access]
             [ring.swagger.schema :as rs]))
 
@@ -43,9 +44,9 @@
                                         (:ownerid new-goal)
                                         (:title new-goal)
                                         (:flow new-goal)
-                                        (f/parse (:startdate new-goal))
-                                        (f/parse (:enddate new-goal))
-                                        (f/parse (:completiondate new-goal))
+                                        (c/to-sql-time (f/parse (:startdate new-goal)))
+                                        (c/to-sql-time (f/parse (:enddate new-goal)))
+                                        (c/to-sql-time (f/parse (:completiondate new-goal)))
                                         (name (:category new-goal))
                                         (name (:difficulty new-goal))
                                         (:description new-goal)
