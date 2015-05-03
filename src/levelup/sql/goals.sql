@@ -11,6 +11,10 @@ SELECT id
        , reason
        , isrecurring
        , ispublic
+       , flow
+       , startdate
+       , enddate
+       , iscompleted
 FROM   goals
 WHERE ispublic = true
       AND parentid = 0;
