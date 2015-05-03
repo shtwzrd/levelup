@@ -6,6 +6,10 @@ CREATE TABLE IF NOT EXISTS goals (
    , parentid         INT
    , ownerid          INT                NOT NULL
    , title            TEXT               NOT NULL
+   , flow             INT                NOT NULL
+   , startdate        TIMESTAMP          NOT NULL
+   , enddate          TIMESTAMP          NOT NULL
+   , completiondate   TIMESTAMP
    , category         TEXT               NOT NULL
    , difficulty       TEXT               NOT NULL
    , description      TEXT
@@ -13,10 +17,6 @@ CREATE TABLE IF NOT EXISTS goals (
    , isrecurring      BOOLEAN            NOT NULL
    , ispublic         BOOLEAN            NOT NULL
    , iscompleted      BOOLEAN            NOT NULL
-   , flow             INT                NOT NULL
-   , startdate        TIMESTAMP          NOT NULL
-   , enddate          TIMESTAMP          NOT NULL
-   , completiondate   TIMESTAMP
 );
 
 -- name: drop-goal-table!

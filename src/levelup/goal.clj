@@ -14,7 +14,7 @@
                    :title String
                    :flow Long
                    :startdate org.joda.time.DateTime
-                   (s/optional-key :enddate) org.joda.time.DateTime
+                   :enddate org.joda.time.DateTime
                    (s/optional-key :completiondate) org.joda.time.DateTime
                    :category (s/enum :health :spirit :knowledge :finance :happiness :social)
                    :difficulty (s/enum :trivial :simple :average :huge :colossal)
@@ -60,11 +60,6 @@
   (let [goal (rs/coerce! Goal goal)]
     (swap! goals assoc (:id goal) goal)
     (get-goal (:id goal))))
-
-;; Data
-
-(when (empty? @goals)
-  (add! {:title "troll goal" :ownerid 1 :flow 0 :description "break Faarkrog's hopes and dreams" :iscompleted true :isrecurring false :ispublic false :difficulty :trivial :category :spirit :startdate "2015-05-05" :enddate "2015-05-08"}))
 
 ;; Routes
 
