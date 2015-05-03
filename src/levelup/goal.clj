@@ -14,9 +14,9 @@
                    :ownerid Long
                    :title String
                    :flow Long
-                   :startdate org.joda.time.DateTime
-                   :enddate org.joda.time.DateTime
-                   (s/optional-key :completiondate) org.joda.time.DateTime
+                   :startdate java.sql.Timestamp
+                   :enddate java.sql.Timestamp
+                   (s/optional-key :completiondate) java.sql.Timestamp
                    :category (s/enum :health :spirit :knowledge :finance :happiness :social)
                    :difficulty (s/enum :trivial :simple :average :huge :colossal)
                    (s/optional-key :description) String
@@ -46,9 +46,9 @@
                                         (:ownerid new-goal)
                                         (:title new-goal)
                                         (:flow new-goal)
-                                        (c/to-sql-time (:startdate new-goal))
-                                        (c/to-sql-time (:enddate new-goal))
-                                        (c/to-sql-time (:completiondate new-goal))
+                                        (:startdate new-goal)
+                                        (:enddate new-goal)
+                                        (:completiondate new-goal)
                                         (name (:category new-goal))
                                         (name (:difficulty new-goal))
                                         (:description new-goal)
