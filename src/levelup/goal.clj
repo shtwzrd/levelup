@@ -37,8 +37,7 @@
 (defn get-goal [id] (@goals id))
 
 (defn get-goals []
-  (map (fun [] (db/cull-nils
-                (db/update-values goal [:startdate :enddate :completiondate] c/from-sql-time)))
+  (map db/coerce-timestamps
        (db/get-all-goal-templates db/db-connection)))
 
 (defn delete! [id] (swap! goals dissoc id) nil)
@@ -60,8 +59,7 @@
                                (:isrecurring new-goal)
                                (:ispublic new-goal)
                                (:iscompleted new-goal))
-        result (db/cull-nils
-                (db/update-values goal [:startdate :enddate :completiondate] c/from-sql-time))]
+        result (db/coerce-timestamps goal)]
     result))
 
 (defn update! [goal]
