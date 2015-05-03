@@ -36,7 +36,7 @@
 (defn delete! [id] (swap! goals dissoc id) nil)
 
 (defn add! [new-goal]
-  (let [goal (data-access/insert-goal<! data-access/db-connection new-goal)]
+  (let [goal (data-access/insert-goal<! data-access/db-connection (seq new-goal))]
     goal))
 
 (defn update! [goal]
