@@ -37,7 +37,7 @@
                                 (GET* "/" request
                                       :return   [goal/Goal]
                                       :summary  "Gets all goals belonging to user"
-                                      (ok (get-goals (:user-id (:route-params request)))))
+                                      (ok (get-goals (Integer/parseInt (:user-id (:route-params request))))))
                                 (GET* "/:id" []
                                       :path-params [id :- Long]
                                       :return   goal/Goal
