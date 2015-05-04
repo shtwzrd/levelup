@@ -64,11 +64,11 @@
 
 (defn update! [goal]
   (db/update-goal! db/db-connection
-                   (Integer/parseInt(:templateid goal))
-                   (Integer/parseInt(:parentid goal))
-                   (Integer/parseInt(:ownerid goal))
+                   (:templateid goal)
+                   (:parentid goal)
+                   (:ownerid goal)
                    (:title goal)
-                   (Integer/parseInt(:flow goal))
+                   (:flow goal)
                    (c/to-sql-time (:startdate goal))
                    (c/to-sql-time (:enddate goal))
                    (c/to-sql-time (:completiondate goal))
@@ -79,7 +79,7 @@
                    (:isrecurring goal)
                    (:ispublic goal)
                    (:iscompleted goal)
-                   (Integer/parseInt (:id goal))))
+                   (:id goal)))
 
 ;; Routes
 
