@@ -19,6 +19,13 @@ FROM   goals
 WHERE ispublic = true
       AND parentid = 0;
 
+-- name: get-all-user-goals
+-- Selects all private goals owned by ownerid
+SELECT * FROM  goals
+WHERE ispublic = false
+      AND ownerid = :ownerid;
+
+
 -- name: insert-goal<!
 -- inserts a single goal
 INSERT INTO goals (

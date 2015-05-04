@@ -43,7 +43,7 @@
 
 ;; Routes
 
-(defroutes* user-routes
+(defroutes* apiroutes
   (context* "/users" []
             :tags ["users"]
             (GET* "/" []

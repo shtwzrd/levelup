@@ -69,7 +69,7 @@
 
 ;; Routes
 
-(defroutes* goal-routes
+(defroutes* apiroutes
   (context* "/goals" []
             :tags ["goals"]
             (GET* "/" []
