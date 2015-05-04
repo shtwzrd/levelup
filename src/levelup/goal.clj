@@ -64,11 +64,11 @@
 
 (defn update! [goal]
   (db/update-goal! db/db-connection
-                   (:templateid goal)
-                   (:parentid goal)
-                   (:ownerid goal)
+                   (Integer/parseInt(:templateid goal))
+                   (Integer/parseInt(:parentid goal))
+                   (Integer/parseInt(:ownerid goal))
                    (:title goal)
-                   (:flow goal)
+                   (Integer/parseInt(:flow goal))
                    (c/to-sql-time (:startdate goal))
                    (c/to-sql-time (:enddate goal))
                    (c/to-sql-time (:completiondate goal))
