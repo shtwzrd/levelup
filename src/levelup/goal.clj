@@ -107,7 +107,8 @@
             (PUT* "/" []
                   :body     [goal Goal]
                   :summary  "Updates a goal"
-                  (ok (update! goal)))
+                  (update! goal)
+                  (ok))
             (DELETE* "/:id" []
                      :path-params [id :- Long]
                      :summary  "Deletes a Goal"

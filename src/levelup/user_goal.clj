@@ -25,7 +25,7 @@
   (goal/add! new-goal))
 
 (defn update! [goal]
-  {:result (goal/update! goal)})
+  (goal/update! goal)
 
 ;; Routes
 
@@ -52,7 +52,8 @@
                                 (PUT* "/" []
                                       :body     [goal goal/Goal]
                                       :summary  "Updates a goal in user's list"
-                                      (ok (update! goal)))
+                                      (update! goal)
+                                      (ok))
                                 (DELETE* "/:id" []
                                          :path-params [id :- Long]
                                          :summary  "Deletes a goal from user's list"
