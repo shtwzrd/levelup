@@ -50,6 +50,7 @@
                                        :summary  "Adds a goal to user's list"
                                        (ok (add! goal)))
                                 (PUT* "/" []
+                                      :return   Integer
                                       :body     [goal goal/Goal]
                                       :summary  "Updates a goal in user's list"
                                       (ok (update! goal)))
