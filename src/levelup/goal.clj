@@ -63,23 +63,27 @@
     result))
 
 (defn update! [goal]
-  (db/update-goal! db/db-connection
-                   (:templateid goal)
-                   (:parentid goal)
-                   (:ownerid goal)
-                   (:title goal)
-                   (:flow goal)
-                   (c/to-sql-time (:startdate goal))
-                   (c/to-sql-time (:enddate goal))
-                   (c/to-sql-time (:completiondate goal))
-                   (name (:category goal))
-                   (name (:difficulty goal))
-                   (:description goal)
-                   (:reason goal)
-                   (:isrecurring goal)
-                   (:ispublic goal)
-                   (:iscompleted goal)
-                   (:id goal)))
+  (try
+    (db/update-goal! db/db-connection
+                     (:templateid goal)
+                     (:parentid goal)
+                     (:ownerid goal)
+                     (:title goal)
+                     (:flow goal)
+                     (c/to-sql-time (:startdate goal))
+                     (c/to-sql-time (:enddate goal))
+                     (c/to-sql-time (:completiondate goal))
+                     (name (:category goal))
+                     (name (:difficulty goal))
+                     (:description goal)
+                     (:reason goal)
+                     (:isrecurring goal)
+                     (:ispublic goal)
+                     (:iscompleted goal)
+                     (:id goal))
+    (catch java.sql.BatchUpdateException e
+      (println e)
+      (.getNextException e))))
 
 ;; Routes
 
