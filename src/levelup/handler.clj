@@ -14,10 +14,9 @@
   (swagger-ui)
   (swagger-docs
    {:info {:version "1.0.0"
-           :title "Levelup API"
-           :description "beep boop"}}
-   {:tags [{:name "goals", :description "managing goals"}
-           {:name "users", :description "managing users"}
+           :title "Levelup API" }}
+   {:tags [{:name "goals", :description "managing goal templates"}
+           {:name "users", :description "managing users and their goals"}
            {:name "util", :description "bonus utilities"}]})
   (context* "/api" []
             (context* "/v1" []

@@ -63,9 +63,23 @@
     result))
 
 (defn update! [goal]
-  (let [goal (rs/coerce! Goal goal)]
-    (swap! goals assoc (:id goal) goal)
-    (get-goal (:id goal))))
+  (db/update-goal! db/db-connection
+                               (:templateid goal)
+                               (:parentid goal)
+                               (:ownerid goal)
+                               (:title goal)
+                               (:flow goal)
+                               (c/to-sql-time (:startdate goal))
+                               (c/to-sql-time (:enddate goal))
+                               (c/to-sql-time (:completiondate goal))
+                               (name (:category goal))
+                               (name (:difficulty goal))
+                               (:description goal)
+                               (:reason goal)
+                               (:isrecurring goal)
+                               (:ispublic goal)
+                               (:iscompleted goal)
+                               (:id goal)))
 
 ;; Routes
 
