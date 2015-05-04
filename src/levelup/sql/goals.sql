@@ -48,19 +48,19 @@ VALUES (
 -- name: update-goal!
 -- updates a single goal
 UPDATE goals
-SET templateid     :templateid
-  , parentid       :parentid
-  , ownerid        :ownerid
-  , title          :title
-  , flow           :flow
-  , startdate      :startdate
-  , enddate        :enddate
-  , completiondate :completiondate
-  , category       :category
-  , difficulty     :difficulty
-  , description    :description
-  , reason         :reason
-  , isrecurring    :isrecurring
-  , ispublic       :ispublic
-  , iscompleted    :iscompleted
+SET templateid     = :templateid
+  , parentid       = :parentid
+  , ownerid        = :ownerid
+  , title          = :title
+  , flow           = :flow
+  , startdate      = :startdate
+  , enddate        = :enddate
+  , completiondate = :completiondate
+  , category       = :category
+  , difficulty     = :difficulty
+  , description    = :description
+  , reason         = :reason
+  , isrecurring    = :isrecurring
+  , ispublic       = :ispublic
+  , iscompleted    = :iscompleted
 WHERE id = :id;
