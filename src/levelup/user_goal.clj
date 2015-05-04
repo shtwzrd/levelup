@@ -25,7 +25,7 @@
   (goal/add! new-goal))
 
 (defn update! [goal]
-  (goal/update! goal)
+  (goal/update! goal))
 
 ;; Routes
 
