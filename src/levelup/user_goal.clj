@@ -35,9 +35,10 @@
                       (context* "/goals" []
                                 :tags ["users"]
                                 (GET* "/" request
+                                      :path-params [user-id :- Long]
                                       :return   [goal/Goal]
                                       :summary  "Gets all goals belonging to user"
-                                      (ok (get-goals (Integer/parseInt (:user-id (:route-params request))))))
+                                      (ok (get-goals user-id)))
                                 (GET* "/:id" []
                                       :path-params [id :- Long]
                                       :return   goal/Goal
@@ -49,7 +50,6 @@
                                        :summary  "Adds a goal to user's list"
                                        (ok (add! goal)))
                                 (PUT* "/" []
-                                      :return   goal/Goal
                                       :body     [goal goal/Goal]
                                       :summary  "Updates a goal in user's list"
                                       (ok (update! goal)))

@@ -101,7 +101,6 @@
                    :summary  "Adds a goal"
                    (ok (add! goal)))
             (PUT* "/" []
-                  :return   Goal
                   :body     [goal Goal]
                   :summary  "Updates a goal"
                   (ok (update! goal)))
