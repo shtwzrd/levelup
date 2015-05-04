@@ -62,5 +62,5 @@ SET templateid     :templateid
   , reason         :reason
   , isrecurring    :isrecurring
   , ispublic       :ispublic
-  , iscompleted   :iscompleted
-WHERE id = :id
+  , iscompleted    :iscompleted
+WHERE id = :id;
