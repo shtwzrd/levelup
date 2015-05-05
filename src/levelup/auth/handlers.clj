@@ -48,6 +48,12 @@
                           :handler authenticated-user}
                          {:pattern #"/api/v1/users/[0-9]+/goals$"
                           :handler {:and [authenticated-user is-that-users-goal]}}
+                         {:pattern #"/api/v1/goals/[0-9]+$"
+                          :request-method: [:get :post]
+                          :handler authenticated-user}
+                         {:pattern #"/api/v1/goals/[0-9]+$"
+                          :request-method: [:put :delete]
+                          :handler {:and [authenticated-user is-that-users-goal]}}
                          {:pattern #"/api/v1/users/[0-9]+/goals/[0-9]+$"
                           :handler {:and [authenticated-user is-that-users-goal]}}
                          {:pattern #"/api/v1/users/[0-9]+$"
