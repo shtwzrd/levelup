@@ -30,8 +30,8 @@
 ;; Domain funcs
 
 (defn get-goal [id]
-  (map db/coerce-timestamps
-       (db/get-goal db/db-connection id)))
+  (first (map db/coerce-timestamps
+              (db/get-goal db/db-connection id))))
 
 (defn get-goals []
   (map db/coerce-timestamps
