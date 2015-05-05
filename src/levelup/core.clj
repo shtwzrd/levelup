@@ -6,6 +6,7 @@
   (:gen-class))
 
 (defn init[]
+  (data-access/create-users-table-if-not-exists! data-access/db-connection)
   (data-access/create-goals-table-if-not-exists! data-access/db-connection))
 
 (defn parse-port [port]
