@@ -64,3 +64,13 @@ SET templateid     = :templateid
   , ispublic       = :ispublic
   , iscompleted    = :iscompleted
 WHERE id = :id;
+
+-- name: delete-goal!
+-- removes a single goal by id
+DELETE FROM goals
+WHERE id = :id;
+
+-- name: get-goal
+-- gets a single goal by id
+SELECT * FROM goals
+WHERE id = :id;

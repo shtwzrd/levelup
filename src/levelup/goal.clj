@@ -27,20 +27,17 @@
 
 (s/defschema NewGoal (dissoc Goal :id))
 
-;; Test 'DB'
-
-(defonce id-seq (atom 0))
-(defonce goals (atom (array-map)))
-
 ;; Domain funcs
 
-(defn get-goal [id] (@goals id))
+(defn get-goal [id]
+  (db/get-goal db/db-connection id))
 
 (defn get-goals []
   (map db/coerce-timestamps
        (db/get-all-goal-templates db/db-connection)))
 
-(defn delete! [id] (swap! goals dissoc id) nil)
+(defn delete! [id]
+  (db/delete-goal! db/db-connection id))
 
 (defn add! [new-goal]
   (let [goal (db/insert-goal<! db/db-connection
