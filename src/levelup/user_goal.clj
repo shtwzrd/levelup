@@ -58,5 +58,6 @@
                                 (DELETE* "/:id" []
                                          :path-params [id :- Long]
                                          :summary  "Deletes a goal from user's list"
+                                         (delete! id)
                                          (ok))))))
 

@@ -30,7 +30,8 @@
 ;; Domain funcs
 
 (defn get-goal [id]
-  (db/get-goal db/db-connection id))
+  (map db/coerce-timestamps
+       (db/get-goal db/db-connection id)))
 
 (defn get-goals []
   (map db/coerce-timestamps
@@ -109,4 +110,5 @@
             (DELETE* "/:id" []
                      :path-params [id :- Long]
                      :summary  "Deletes a Goal"
+                     (delete! id)
                      (ok))))
