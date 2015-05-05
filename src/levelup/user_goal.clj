@@ -43,6 +43,7 @@
                                       :path-params [id :- Long]
                                       :return   goal/Goal
                                       :summary  "Gets a goal belonging to user"
+                                      (println get-goal id)
                                       (ok (get-goal id)))
                                 (POST* "/" []
                                        :return   goal/Goal
@@ -57,5 +58,5 @@
                                 (DELETE* "/:id" []
                                          :path-params [id :- Long]
                                          :summary  "Deletes a goal from user's list"
-                                         (ok (delete! id)))))))
+                                         (ok))))))
 

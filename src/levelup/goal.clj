@@ -109,4 +109,4 @@
             (DELETE* "/:id" []
                      :path-params [id :- Long]
                      :summary  "Deletes a Goal"
-                     (ok (delete! id)))))
+                     (ok))))
