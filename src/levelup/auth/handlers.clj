@@ -3,6 +3,7 @@
             [buddy.auth.backends.httpbasic :refer [http-basic-backend]]
             [buddy.auth.backends.token :refer [token-backend]]
             [buddy.auth.accessrules :as ar]
+            [levelup.data :as db]
             [clojure.string :refer [split]]))
 
 (defn authenticated-user
@@ -22,8 +23,8 @@
 (defn is-that-users-goal
   [request]
   (let [id (:identity request)
-        uri (nth (split (:uri request) #"/") 4)]
-    (if (= id uri)
+        owner (db/get-ownerid (Integer/parseInt(last (split (:uri request) #"/"))))]
+    (if (= id owner)
       true
       (ar/error "Not authorized to view that goal"))))
 

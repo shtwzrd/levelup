@@ -74,3 +74,8 @@ WHERE id = :id;
 -- gets a single goal by id
 SELECT * FROM goals
 WHERE id = :id;
+
+-- name: get-goal-owner
+-- returns the uid of the user who owns the goal
+SELECT ownerid FROM goals
+WHERE id = :id;
