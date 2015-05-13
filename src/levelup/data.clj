@@ -21,4 +21,4 @@
 (defqueries "levelup/sql/tables.sql")
 
 (defn get-ownerid [goal-id]
-  (:ownerid (first (get-goal-owner goal-id))))
+  (:ownerid (first (get-goal-owner db-connection goal-id))))
