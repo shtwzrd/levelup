@@ -55,7 +55,7 @@
 ;                          :handler {:and [authenticated-user is-that-users-goal]}}
 ;                         {:pattern #"/api/v1/users/[0-9]+/goals/[0-9]+$"
 ;                          :handler {:and [authenticated-user is-that-users-goal]}}
-                         {:pattern #"/api/v1/users/[0-9]+$"
-                          :handler {:and [authenticated-user is-that-user]}}]
-                 :on-error unauthorized-handler})
+;                         {:pattern #"/api/v1/users/[0-9]+$"
+;                          :handler {:and [authenticated-user is-that-user]}}]
+                 ]:on-error unauthorized-handler})
 

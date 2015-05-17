@@ -18,6 +18,7 @@
   (env :database-url))
 
 (defqueries "levelup/sql/goals.sql")
+(defqueries "levelup/sql/users.sql")
 (defqueries "levelup/sql/tables.sql")
 
 (defn get-ownerid [goal-id]

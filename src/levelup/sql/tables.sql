@@ -32,14 +32,9 @@ CREATE TABLE IF NOT EXISTS users (
    , knowledge        INT                DEFAULT 0
    , spirit           INT                DEFAULT 0
    , registrationdate TIMESTAMP          DEFAULT CURRENT_TIMESTAMP
+   , basic_secret     TEXT
    , displayname      VARCHAR(254)
 );
-
-CREATE TABLE IF NOT EXISTS basic_secrets (
-    id                SERIAL PRIMARY KEY NOT NULL
-   , userid           INT                NOT NULL
-   , secret           TEXT               NOT NULL
-)
 
 -- name: drop-goals-table!
 -- drop the goals table
@@ -48,9 +43,3 @@ DROP TABLE goals;
 -- name: drop-users-table!
 -- drop the users table
 DROP TABLE users;
-
--- name: drop-basic-secrets-table!
--- drop the basic_secrets table
-DROP TABLE basic_secrets;
-
-

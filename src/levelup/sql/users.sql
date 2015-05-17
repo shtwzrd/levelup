@@ -1,38 +1,74 @@
--- name: insert-user<!
--- creates a single user
+-- name: insert-user-with-basic-secret<!
+-- creates a single user with a basic password for authentication
 INSERT INTO users (
        email
        , displayname
+       , basic_secret
 )
 VALUES (
        :email
        , :displayname
+       , :basic_secret
 );
 
 -- name: get-all-users
--- Gets all data, including stats and email addresses, for all users
-SELECT * FROM users;
+-- Gets the id, email and displayname for all users
+SELECT id
+       , email
+       , displayname
+FROM users;
 
 -- name: get-user-by-email
 -- Gets all data for a user specified by email address
-SELECT * FROM users
+SELECT email
+       , social
+       , health
+       , happiness
+       , finance
+       , knowledge
+       , spirit
+       , displayname
+       , id
+FROM users
 WHERE email = :email;
 
 -- name: get-user-by-id
 -- Gets all data for a user specified by user id
-SELECT * FROM users
+SELECT email
+       , social
+       , health
+       , happiness
+       , finance
+       , knowledge
+       , spirit
+       , displayname
+       , id
+FROM users
 WHERE id = :id;
 
--- name: update-user-by-id!
--- updates a single user's data
+-- name: get-user-secrets
+-- Returns all the encrypted secrets for the user
+SELECT id
+       , basic_secret
+FROM users
+WHERE id = :id;
+
+
+-- name: update-user-stats-by-id!
+-- updates a single user's stats
 UPDATE users
-SET email       = :email
-  , social      = :social
+SET social      = :social
   , health      = :health
   , happiness   = :happiness
   , finance     = :finance
   , knowledge   = :knowledge
   , spirit      = :spirit
+WHERE id = :id;
+
+-- name: update-user-by-id!
+-- updates a single user's email and/or displayname
+UPDATE users
+SET email       = :email
   , displayname = :displayname
 WHERE id = :id;
 

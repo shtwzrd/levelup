@@ -4,6 +4,7 @@
                  [ring/ring-servlet "1.3.2"]
                  [clj-time "0.9.0"]
                  [buddy/buddy-auth "0.5.1"]
+                 [buddy/buddy-hashers "0.4.2"]
                  [prismatic/schema "0.4.1"]
                  [yesql "0.4.0"]
                  [environ "1.0.0"]
