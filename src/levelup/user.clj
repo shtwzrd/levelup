@@ -77,7 +77,7 @@
                   :return   User
                   :summary  "Gets the user with the corresponding id"
                   (ok (get-user-by-id id)))
-            (GET* "/:email" []
+            (GET* "/by-email/:email" []
                   :path-params [email :- String]
                   :return   User
                   :summary  "Gets the user with the corresponding email address"
