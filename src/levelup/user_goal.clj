@@ -6,6 +6,7 @@
             [clj-time.coerce :as c]
             [levelup.data :as db]
             [levelup.goal :as goal]
+            [levelup.auth.access-control :as access]
             [ring.swagger.schema :as rs])
   (:import [java.sql Timestamp]))
 
@@ -38,25 +39,30 @@
                                       :path-params [user-id :- Long]
                                       :return   [goal/Goal]
                                       :summary  "Gets all goals belonging to user"
+                                      :middlewares [access/authenticated-user access/is-that-user]
                                       (ok (get-goals user-id)))
-                                (GET* "/:id" []
-                                      :path-params [id :- Long]
+                                (GET* "/:goal-id" []
+                                      :path-params [goal-id :- Long]
                                       :return   goal/Goal
                                       :summary  "Gets a goal belonging to user"
-                                      (ok (get-goal id)))
+                                      :middlewares [access/authenticated-user access/is-that-user]
+                                      (ok (get-goal goal-id)))
                                 (POST* "/" []
                                        :return   goal/Goal
                                        :body     [goal (rs/describe goal/NewGoal "new goal")]
                                        :summary  "Adds a goal to user's list"
+                                       :middlewares [access/authenticated-user access/is-that-user]
                                        (ok (add! goal)))
                                 (PUT* "/" []
                                       :body     [goal goal/Goal]
                                       :summary  "Updates a goal in user's list"
+                                      :middlewares [access/authenticated-user access/is-that-user]
                                       (update! goal)
                                       (ok))
-                                (DELETE* "/:id" []
-                                         :path-params [id :- Long]
+                                (DELETE* "/:goal-id" []
+                                         :path-params [goal-id :- Long]
                                          :summary  "Deletes a goal from user's list"
-                                         (delete! id)
+                                         :middlewares [access/authenticated-user access/is-that-user]
+                                         (delete! goal-id)
                                          (ok))))))
 

@@ -5,6 +5,7 @@
             [clj-time.format :as f]
             [clj-time.coerce :as c]
             [levelup.data :as db]
+            [levelup.auth.access-control :as access]
             [ring.swagger.schema :as rs])
   (:import [java.sql Timestamp]))
 
@@ -99,23 +100,26 @@
                   :return   [Goal]
                   :summary  "Gets all Goals"
                   (ok (get-goals)))
-            (GET* "/:id" []
-                  :path-params [id :- Long]
+            (GET* "/:goal-id" []
+                  :path-params [goal-id :- Long]
                   :return   Goal
                   :summary  "Gets a goal"
-                  (ok (get-goal id)))
+                  (ok (get-goal goal-id)))
             (POST* "/" []
                    :return   Goal
                    :body     [goal (rs/describe NewGoal "new goal")]
                    :summary  "Adds a goal"
+                   :middlewares [access/authenticated-user]
                    (ok (add! goal)))
             (PUT* "/" []
                   :body     [goal Goal]
                   :summary  "Updates a goal"
+                  :middlewares [access/authenticated-user access/is-that-users-goal]
                   (update! goal)
                   (ok))
-            (DELETE* "/:id" []
-                     :path-params [id :- Long]
+            (DELETE* "/:goal-id" []
+                     :path-params [goal-id :- Long]
                      :summary  "Deletes a Goal"
-                     (delete! id)
+                     :middlewares [access/authenticated-user access/is-that-users-goal]
+                     (delete! goal-id)
                      (ok))))

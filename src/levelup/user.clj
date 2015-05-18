@@ -5,6 +5,7 @@
             [ring.swagger.schema :as rs]
             [levelup.data :as db]
             [buddy.hashers :as sec]
+            [levelup.auth.access-control :as access]
             [levelup.goal :as goals]))
 
 (s/defschema User {:id Long
@@ -63,6 +64,7 @@
             (GET* "/" []
                   :return   [User]
                   :summary  "Gets all users"
+                  :middlewares [access/authenticated-user]
                   (ok (get-users)))
             (GET* "/login" []
                   :summary "Returns 200 on a successfully authenticated request"
@@ -72,24 +74,28 @@
                    :summary "Registers a new user with a password"
                    :body     [user (rs/describe NewUser "new user")]
                    (ok (add-with-basic-secret! user)))
-            (GET* "/:id" []
-                  :path-params [id :- Long]
+            (GET* "/:user-id" []
+                  :path-params [user-id :- Long]
                   :return   User
                   :summary  "Gets the user with the corresponding id"
-                  (ok (get-user-by-id id)))
+                  :middlewares [access/authenticated-user]
+                  (ok (get-user-by-id user-id)))
             (GET* "/by-email/:email" []
                   :path-params [email :- String]
                   :return   User
                   :summary  "Gets the user with the corresponding email address"
+                  :middlewares [access/authenticated-user]
                   (ok (get-user-by-email email)))
             (PUT* "/" []
                   :return   User
                   :body     [user User]
                   :summary  "Updates a user"
+                  :middlewares [access/authenticated-user access/is-that-user]
                   (update! user)
                   (ok))
-            (DELETE* "/:id" []
-                     :path-params [id :- Long]
+            (DELETE* "/:user-id" []
+                     :path-params [user-id :- Long]
                      :summary  "Deletes a user"
-                     (delete! id)
+                     :middlewares [access/authenticated-user access/is-that-user]
+                     (delete! user-id)
                      (ok))))

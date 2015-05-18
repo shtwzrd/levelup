@@ -2,12 +2,10 @@
   (:require [compojure.api.sweet :refer :all]
             [ring.util.http-response :refer :all]
             [ring.util.response :refer (response redirect)]
-            [buddy.auth.middleware :refer [wrap-authentication wrap-authorization]]
-            [buddy.auth.accessrules :refer [restrict wrap-access-rules]]
+            [buddy.auth.middleware :refer [wrap-authentication]]
             [levelup.user :as user]
             [levelup.goal :as goal]
             [levelup.user-goal :as user-goal]
-            [levelup.auth.handlers :refer :all]
             [levelup.auth.core :refer :all]))
 
 (defapi swag-app
@@ -32,5 +30,4 @@
                                       (ok (str request)))))))
 
 (def app (-> swag-app
-             (wrap-access-rules auth-rules)
              (wrap-authentication auth-backend)))
