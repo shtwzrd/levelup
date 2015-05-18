@@ -21,6 +21,7 @@
                    :difficulty (s/enum :trivial :simple :average :huge :colossal)
                    (s/optional-key :description) String
                    (s/optional-key :reason) String
+                   (s/optional-key :followers) Integer
                    :isrecurring Boolean
                    :ispublic Boolean
                    :iscompleted Boolean})
@@ -38,6 +39,9 @@
        (db/get-all-goal-templates db/db-connection)))
 
 (defn delete! [id]
+  (let [goal (db/get-goal db/db-connection id)]
+    (when (:templateid goal)
+      (db/dec-goal-followers! db/db-connection (:templateid goal))))
   (db/delete-goal! db/db-connection id))
 
 (defn add! [new-goal]
@@ -58,6 +62,9 @@
                                (:ispublic new-goal)
                                (:iscompleted new-goal))
         result (db/coerce-timestamps goal)]
+
+    (when (:templateid goal)
+      (db/inc-goal-followers! db/db-connection (:templateid goal)))
     result))
 
 (defn update! [goal]

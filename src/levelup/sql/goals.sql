@@ -79,3 +79,15 @@ WHERE id = :id;
 -- returns the uid of the user who owns the goal
 SELECT ownerid FROM goals
 WHERE id = :id;
+
+-- name: inc-goal-followers!
+-- +1 to the follower count of the goal matching the provided id
+UPDATE goals
+       SET followers = followers + 1
+       WHERE id = :id
+
+-- name: dec-goal-followers!
+-- -1 to the follower count of the goal matching the provided id
+UPDATE goals
+       SET followers = followers - 1
+       WHERE id = :id

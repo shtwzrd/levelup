@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS goals (
    , difficulty       TEXT               NOT NULL
    , description      TEXT
    , reason           TEXT
+   , followers        INT                DEFAULT 0
    , isrecurring      BOOLEAN            NOT NULL
    , ispublic         BOOLEAN            NOT NULL
    , iscompleted      BOOLEAN            NOT NULL
