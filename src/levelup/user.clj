@@ -69,9 +69,10 @@
                   :summary  "Gets all users"
                   :middlewares [access/authenticated-user]
                   (ok (get-users)))
-            (GET* "/login" []
-                  :summary "Returns 200 on a successfully authenticated request"
-                  (ok))
+            (GET* "/login" request
+                  :summary "Returns status code 200 on a successfully authenticated request"
+                  :middlewares [access/authenticated-user]
+                  (ok {}))
             (POST* "/register-basic" []
                    :return   ResponseUser
                    :summary "Registers a new user with a password"
@@ -95,10 +96,10 @@
                   :summary  "Updates a user"
                   :middlewares [access/authenticated-user access/is-that-user]
                   (update! user)
-                  (ok))
+                  (ok {}))
             (DELETE* "/:user-id" []
                      :path-params [user-id :- Long]
                      :summary  "Deletes a user"
                      :middlewares [access/authenticated-user access/is-that-user]
                      (delete! user-id)
-                     (ok))))
+                     (ok {}))))
