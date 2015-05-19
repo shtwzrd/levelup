@@ -50,7 +50,6 @@ VALUES (
 UPDATE goals
 SET templateid     = :templateid
   , parentid       = :parentid
-  , ownerid        = :ownerid
   , title          = :title
   , flow           = :flow
   , startdate      = :startdate

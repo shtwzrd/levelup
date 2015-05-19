@@ -9,25 +9,26 @@
             [ring.swagger.schema :as rs])
   (:import [java.sql Timestamp]))
 
-(s/defschema Goal {:id Long
-                   (s/optional-key :templateid) Long
-                   (s/optional-key :parentid) Long
-                   :ownerid Long
-                   :title String
-                   :flow Long
-                   :startdate org.joda.time.DateTime
-                   :enddate org.joda.time.DateTime
-                   (s/optional-key :completiondate) org.joda.time.DateTime
-                   :category (s/enum :health :spirit :knowledge :finance :happiness :social)
-                   :difficulty (s/enum :trivial :simple :average :huge :colossal)
-                   (s/optional-key :description) String
-                   (s/optional-key :reason) String
-                   (s/optional-key :followers) Integer
-                   :isrecurring Boolean
-                   :ispublic Boolean
-                   :iscompleted Boolean})
+(s/defschema ResponseGoal {:id Long
+                           (s/optional-key :templateid) Long
+                           (s/optional-key :parentid) Long
+                           :ownerid Long
+                           :title String
+                           :flow Long
+                           :startdate org.joda.time.DateTime
+                           :enddate org.joda.time.DateTime
+                           (s/optional-key :completiondate) org.joda.time.DateTime
+                           :category (s/enum :health :spirit :knowledge :finance :happiness :social)
+                           :difficulty (s/enum :trivial :simple :average :huge :colossal)
+                           (s/optional-key :description) String
+                           (s/optional-key :reason) String
+                           (s/optional-key :followers) Integer
+                           :isrecurring Boolean
+                           :ispublic Boolean
+                           :iscompleted Boolean})
 
-(s/defschema NewGoal (dissoc Goal :id))
+(s/defschema RequestGoal (dissoc ResponseGoal :ownerid))
+(s/defschema NewGoal (dissoc RequestGoal :id))
 
 ;; Domain funcs
 
@@ -45,11 +46,11 @@
       (db/dec-goal-followers! db/db-connection (:templateid goal))))
   (db/delete-goal! db/db-connection id))
 
-(defn add! [new-goal]
+(defn add! [new-goal ownerid]
   (let [goal (db/insert-goal<! db/db-connection
                                (:templateid new-goal)
                                (:parentid new-goal)
-                               (:ownerid new-goal)
+                               (Integer/parseInt ownerid)
                                (:title new-goal)
                                (:flow new-goal)
                                (c/to-sql-time (:startdate new-goal))
@@ -73,7 +74,6 @@
     (db/update-goal! db/db-connection
                      (:templateid goal)
                      (:parentid goal)
-                     (:ownerid goal)
                      (:title goal)
                      (:flow goal)
                      (c/to-sql-time (:startdate goal))
@@ -97,22 +97,22 @@
   (context* "/goals" []
             :tags ["goals"]
             (GET* "/" []
-                  :return   [Goal]
+                  :return   [ResponseGoal]
                   :summary  "Gets all Goals"
                   (ok (get-goals)))
             (GET* "/:goal-id" []
                   :path-params [goal-id :- Long]
-                  :return   Goal
+                  :return   ResponseGoal
                   :summary  "Gets a goal"
                   (ok (get-goal goal-id)))
-            (POST* "/" []
-                   :return   Goal
+            (POST* "/" request
+                   :return   ResponseGoal
                    :body     [goal (rs/describe NewGoal "new goal")]
                    :summary  "Adds a goal"
                    :middlewares [access/authenticated-user]
-                   (ok (add! goal)))
+                   (ok (add! goal (:identity request))))
             (PUT* "/" []
-                  :body     [goal Goal]
+                  :body     [goal RequestGoal]
                   :summary  "Updates a goal"
                   :middlewares [access/authenticated-user access/is-that-users-goal]
                   (update! goal)

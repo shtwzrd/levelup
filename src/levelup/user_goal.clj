@@ -22,8 +22,8 @@
 (defn delete! [id]
   (goal/delete! id))
 
-(defn add! [new-goal]
-  (goal/add! new-goal))
+(defn add! [new-goal ownerid]
+  (goal/add! new-goal ownerid))
 
 (defn update! [goal]
   (goal/update! goal))
@@ -37,24 +37,24 @@
                                 :tags ["users"]
                                 (GET* "/" request
                                       :path-params [user-id :- Long]
-                                      :return   [goal/Goal]
+                                      :return   [goal/ResponseGoal]
                                       :summary  "Gets all goals belonging to user"
                                       :middlewares [access/authenticated-user access/is-that-user]
                                       (ok (get-goals user-id)))
                                 (GET* "/:goal-id" []
                                       :path-params [goal-id :- Long]
-                                      :return   goal/Goal
+                                      :return   goal/ResponseGoal
                                       :summary  "Gets a goal belonging to user"
                                       :middlewares [access/authenticated-user access/is-that-user]
                                       (ok (get-goal goal-id)))
-                                (POST* "/" []
-                                       :return   goal/Goal
+                                (POST* "/" request
+                                       :return   goal/ResponseGoal
                                        :body     [goal (rs/describe goal/NewGoal "new goal")]
                                        :summary  "Adds a goal to user's list"
                                        :middlewares [access/authenticated-user access/is-that-user]
-                                       (ok (add! goal)))
+                                       (ok (add! goal (:identity request))))
                                 (PUT* "/" []
-                                      :body     [goal goal/Goal]
+                                      :body     [goal goal/RequestGoal]
                                       :summary  "Updates a goal in user's list"
                                       :middlewares [access/authenticated-user access/is-that-user]
                                       (update! goal)

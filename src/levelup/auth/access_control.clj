@@ -7,7 +7,6 @@
 
 (defn authenticated-user [handler]
   (fn [request]
-    (println request)
     (if (authenticated? request)
       (handler request)
       (-> (response "Access Denied: Failed to authenticate")
@@ -26,7 +25,6 @@
   (fn [request]
     (let [cred (:identity request)
           owner (db/get-ownerid (Integer/parseInt(:user-id (:route-params request))))]
-      (println request)
       (if (= cred owner)
         (handler request)
         (-> (response "Access Denied: Unauthorized")
