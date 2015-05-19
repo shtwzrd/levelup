@@ -12,10 +12,16 @@ VALUES (
 );
 
 -- name: get-all-users
--- Gets the id, email and displayname for all users
+-- Gets all non-sensitive data from users
 SELECT id
        , email
        , displayname
+       , social
+       , health
+       , happiness
+       , finance
+       , knowledge
+       , spirit
 FROM users;
 
 -- name: get-user-by-email

@@ -8,20 +8,23 @@
             [levelup.auth.access-control :as access]
             [levelup.goal :as goals]))
 
-(s/defschema User {:id Long
-                   (s/optional-key :secret) String
-                   (s/optional-key :displayname) String
-                   (s/optional-key :social) Integer
-                   (s/optional-key :health) Integer
-                   (s/optional-key :happiness) Integer
-                   (s/optional-key :finance) Integer
-                   (s/optional-key :knowledge) Integer
-                   (s/optional-key :spirit) Integer
-                   :email String})
+(s/defschema FullUser {:id Long
+                       (s/optional-key :displayname) String
+                       :social Integer
+                       :health Integer
+                       :happiness Integer
+                       :finance Integer
+                       :knowledge Integer
+                       :spirit Integer
+                       (s/optional-key :secret) String
+                       (s/optional-key :email) String})
 
-(s/defschema NewUser {:email String
-                      :displayname String
-                      :secret String})
+(s/defschema ResponseUser (dissoc FullUser (s/optional-key :secret)))
+
+(s/defschema RequestUser
+  (dissoc FullUser :social :health :happiness :finance :knowledge :spirit))
+
+(s/defschema NewUser (dissoc RequestUser :id))
 
 ;; Domain funcs
 
@@ -62,7 +65,7 @@
   (context* "/users" []
             :tags ["users"]
             (GET* "/" []
-                  :return   [User]
+                  :return   [ResponseUser]
                   :summary  "Gets all users"
                   :middlewares [access/authenticated-user]
                   (ok (get-users)))
@@ -70,25 +73,25 @@
                   :summary "Returns 200 on a successfully authenticated request"
                   (ok))
             (POST* "/register-basic" []
-                   :return   User
+                   :return   ResponseUser
                    :summary "Registers a new user with a password"
                    :body     [user (rs/describe NewUser "new user")]
                    (ok (add-with-basic-secret! user)))
             (GET* "/:user-id" []
                   :path-params [user-id :- Long]
-                  :return   User
+                  :return   ResponseUser
                   :summary  "Gets the user with the corresponding id"
                   :middlewares [access/authenticated-user]
                   (ok (get-user-by-id user-id)))
             (GET* "/by-email/:email" []
                   :path-params [email :- String]
-                  :return   User
+                  :return   ResponseUser
                   :summary  "Gets the user with the corresponding email address"
                   :middlewares [access/authenticated-user]
                   (ok (get-user-by-email email)))
             (PUT* "/" []
-                  :return   User
-                  :body     [user User]
+                  :return   ResponseUser
+                  :body     [user RequestUser]
                   :summary  "Updates a user"
                   :middlewares [access/authenticated-user access/is-that-user]
                   (update! user)
