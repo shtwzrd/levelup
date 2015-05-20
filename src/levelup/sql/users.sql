@@ -59,6 +59,13 @@ SELECT id
 FROM users
 WHERE id = :id;
 
+-- name: get-user-secrets-by-email
+-- Returns all the encrypted secrets for the user, with email as the identifier
+SELECT email
+       , basic_secret
+FROM users
+WHERE email = :email;
+
 
 -- name: update-user-stats-by-id!
 -- updates a single user's stats

@@ -7,12 +7,12 @@
 
 (defn authentication-fn
   [request authdata]
-  (let [uid (:username authdata)
+  (let [id (:username authdata)
         secret (:password authdata)
-        user-secret (first (data/get-user-secrets data/db-connection (Integer/parseInt uid)))]
+        user-secret (first (data/get-user-secrets-by-email data/db-connection id))]
     (when user-secret
       (when (sec/check secret (:basic_secret user-secret))
-        uid))))
+        (:id (first (data/get-user-by-email data/db-connection id)))))))
 
 (def auth-backend
   (http-basic-backend {:authfn authentication-fn}))

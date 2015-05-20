@@ -24,7 +24,7 @@
 (defn is-that-users-goal [handler]
   (fn [request]
     (let [cred (:identity request)
-          owner (db/get-ownerid (Integer/parseInt(:user-id (:route-params request))))]
+          owner (db/get-ownerid (Integer/parseInt(:goal-id (:route-params request))))]
       (if (= cred owner)
         (handler request)
         (-> (response "Access Denied: Unauthorized")
