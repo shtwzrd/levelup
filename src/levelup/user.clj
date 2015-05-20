@@ -70,9 +70,9 @@
                   :middlewares [access/authenticated-user]
                   (ok (get-users)))
             (GET* "/login" request
-                  :summary "Returns status code 200 on a successfully authenticated request"
+                  :summary "Returns the currently authenticated user"
                   :middlewares [access/authenticated-user]
-                  (ok {}))
+                  (ok (get-user-by-id (:identity request))))
             (POST* "/register-basic" []
                    :return   ResponseUser
                    :summary "Registers a new user with a password"
