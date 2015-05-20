@@ -27,7 +27,7 @@
                            :ispublic Boolean
                            :iscompleted Boolean})
 
-(s/defschema RequestGoal (dissoc ResponseGoal :ownerid))
+(s/defschema RequestGoal (dissoc ResponseGoal :ownerid (s/optional-key :followers)))
 (s/defschema NewGoal (dissoc RequestGoal :id))
 
 ;; Domain funcs
@@ -50,7 +50,7 @@
   (let [goal (db/insert-goal<! db/db-connection
                                (:templateid new-goal)
                                (:parentid new-goal)
-                               (Integer/parseInt ownerid)
+                               ownerid
                                (:title new-goal)
                                (:flow new-goal)
                                (c/to-sql-time (:startdate new-goal))
