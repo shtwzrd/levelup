@@ -14,8 +14,10 @@
 
 (defn is-that-user [handler]
   (fn [request]
+    (println request)
     (let [cred (:identity request)
-          id (:user-id (:route-params request))]
+          id (Integer/parseInt (:user-id (:route-params request)))]
+      (println cred " " id)
       (if (= id cred)
         (handler request)
         (-> (response "Access Denied: Unauthorized")
