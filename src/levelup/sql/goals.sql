@@ -1,8 +1,7 @@
 -- name: get-all-goal-templates
--- Selects all publically listed top-level goals
+-- Selects all publically listed goals
 SELECT * FROM goals
-WHERE ispublic = true
-      AND parentid = 0;
+WHERE ispublic = true;
 
 -- name: get-all-user-goals
 -- Selects all private goals owned by ownerid
