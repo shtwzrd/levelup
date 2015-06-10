@@ -48,12 +48,14 @@
                                       :middlewares [access/authenticated-user access/is-that-user]
                                       (ok (get-goal goal-id)))
                                 (POST* "/" request
+                                       :path-params [goal-id :- Long]
                                        :return   goal/ResponseGoal
                                        :body     [goal (rs/describe goal/NewGoal "new goal")]
                                        :summary  "Adds a goal to user's list"
                                        :middlewares [access/authenticated-user access/is-that-user]
                                        (ok (add! goal (:identity request))))
                                 (PUT* "/" []
+                                      :path-params [goal-id :- Long]
                                       :body     [goal goal/RequestGoal]
                                       :summary  "Updates a goal in user's list"
                                       :middlewares [access/authenticated-user access/is-that-user]

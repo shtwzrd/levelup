@@ -106,12 +106,14 @@
                   :summary  "Gets a goal"
                   (ok (get-goal goal-id)))
             (POST* "/" request
+                   :path-params [goal-id :- Long]
                    :return   ResponseGoal
                    :body     [goal (rs/describe NewGoal "new goal")]
                    :summary  "Adds a goal"
                    :middlewares [access/authenticated-user]
                    (ok (add! goal (:identity request))))
             (PUT* "/" []
+                  :path-params [goal-id :- Long]
                   :body     [goal RequestGoal]
                   :summary  "Updates a goal"
                   :middlewares [access/authenticated-user access/is-that-users-goal]
