@@ -24,7 +24,7 @@
 
       (println request) 
     (let [cred (:identity request)
-          owner (db/get-ownerid (Integer/parseInt (:id (:route-params request))))]
+          owner (db/get-ownerid (Integer/parseInt (:goal-id (:route-params request))))]
       (if (= cred owner)
         (handler request)
         (forbidden "Access Denied: Unauthorized")))))
