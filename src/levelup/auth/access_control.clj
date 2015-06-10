@@ -21,9 +21,10 @@
 
 (defn is-that-users-goal [handler]
   (fn [request]
+
+      (println request) 
     (let [cred (:identity request)
           owner (db/get-ownerid (Integer/parseInt (:id (:route-params request))))]
-      (println request) 
       (if (= cred owner)
         (handler request)
         (forbidden "Access Denied: Unauthorized")))))
