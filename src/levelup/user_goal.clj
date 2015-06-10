@@ -45,16 +45,15 @@
                                       :path-params [goal-id :- Long]
                                       :return   goal/ResponseGoal
                                       :summary  "Gets a goal belonging to user"
-                                      :middlewares [access/authenticated-user access/is-that-user]
+                                      :middlewares [access/authenticated-user access/is-that-users-goal]
                                       (ok (get-goal goal-id)))
                                 (POST* "/" request
-                                       :path-params [goal-id :- Long]
                                        :return   goal/ResponseGoal
                                        :body     [goal (rs/describe goal/NewGoal "new goal")]
                                        :summary  "Adds a goal to user's list"
-                                       :middlewares [access/authenticated-user access/is-that-user]
+                                       :middlewares [access/authenticated-user access/is-that-users-goal]
                                        (ok (add! goal (:identity request))))
-                                (PUT* "/" []
+                                (PUT* "/:goal-id" []
                                       :path-params [goal-id :- Long]
                                       :body     [goal goal/RequestGoal]
                                       :summary  "Updates a goal in user's list"
@@ -64,7 +63,7 @@
                                 (DELETE* "/:goal-id" []
                                          :path-params [goal-id :- Long]
                                          :summary  "Deletes a goal from user's list"
-                                         :middlewares [access/authenticated-user access/is-that-user]
+                                         :middlewares [access/authenticated-user access/is-that-users-goal]
                                          (delete! goal-id)
                                          (ok))))))
 
