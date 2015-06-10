@@ -58,7 +58,7 @@
                                       :path-params [goal-id :- Long]
                                       :body     [goal goal/RequestGoal]
                                       :summary  "Updates a goal in user's list"
-                                      :middlewares [access/authenticated-user access/is-that-user]
+                                      :middlewares [access/authenticated-user access/is-that-users-goal]
                                       (update! goal)
                                       (ok))
                                 (DELETE* "/:goal-id" []
