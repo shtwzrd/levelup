@@ -51,7 +51,7 @@
                                        :return   goal/ResponseGoal
                                        :body     [goal (rs/describe goal/NewGoal "new goal")]
                                        :summary  "Adds a goal to user's list"
-                                       :middlewares [access/authenticated-user access/is-that-users-goal]
+                                       :middlewares [access/authenticated-user access/is-that-user]
                                        (ok (add! goal (:identity request))))
                                 (PUT* "/:goal-id" []
                                       :path-params [goal-id :- Long]
